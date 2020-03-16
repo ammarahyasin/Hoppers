@@ -1,0 +1,39 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+public class Square //this class is gonna represent a clickable square on the GUI
+{ 
+
+    private int xCoord; //add instance variables so it can hold info about its location on the board
+    private int yCoord;
+/*  static ImageIcon greenfrog = new ImageIcon("GreenFrog.png");
+    static ImageIcon greenfrog2 = new ImageIcon("GreenFrog2.png");
+    static ImageIcon redfrog = new ImageIcon("RedFrog.png");
+    static ImageIcon redfrog2 = new ImageIcon("RedFrog2.png");
+    static ImageIcon lilypad = new ImageIcon("LilyPad.png");
+    static ImageIcon water = new ImageIcon("Water.png");
+
+    private JButton greenFrog = new JButton(greenfrog);
+    private JButton greenFrog2 = new JButton(greenfrog2);
+    private JButton redFrog = new JButton(redfrog);
+    private JButton redFrog2 = new JButton(redfrog2);
+    private JButton lilyPad = new JButton(lilypad);
+    public static JButton waterButton = new JButton(water); */
+
+    //public static ImageIcon water = n;
+    //public static JButton waterButton = new JButton(new ImageIcon("Water.png"));
+
+    //public void waterSquare()
+    //{
+    
+    public static ImageIcon water = new ImageIcon("water.png"); //gets image and sets as icon called 'water'
+   // public static JButton waterButton = new JButton(water); //sets icon as button called 'waterButton'
+   // waterButton.setIcon(water); 
+    //}
+
+  /*  public Square() //constructor for Square class that creates square and records location based on parameters 
+    {
+         
+    } */
+    
+}
