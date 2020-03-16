@@ -1,0 +1,30 @@
+public Board() //this constructor shows a window with 25 instances of Square
+    {
+        frame = new JFrame(); //variables initialised
+        frame.setTitle("Hoppers!");
+        frame.setSize(500,500); 
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); 
+
+        mainPanel = new JPanel(); //creating numeric panel at bottom 
+        mainPanel.setLayout(new GridLayout(5,5)); //5x5 grid layout to create 25 panel grid
+
+        ImageIcon water = new ImageIcon("water.png");
+
+        for(int i=1; i<26; i++) //creates 25 instances of 
+        {
+            mainPanel.add(new JButton(water));
+        } 
+
+        frame.setContentPane(mainPanel); //bind panel to the frame
+        frame.setVisible(true);
+    }
+
+    public static void main(final String args[])
+    {
+        new Board(); //creates instance of the board
+
+        //Square square1 = new Square();
+        //square1.waterSquare();
+    }
+}
