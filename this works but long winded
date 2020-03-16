@@ -1,0 +1,49 @@
+BOARD:
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+public class Board //this class is gonna represent the GUI
+{
+    public static JFrame frame; //creates window
+    public static JPanel mainPanel; //creates panel
+    public static JButton waterButton = new JButton(new ImageIcon("Water.png"));
+
+    public Board() //this constructor shows a window with 25 instances of Square
+    {
+        frame = new JFrame(); //variables initialised
+        frame.setTitle("Hoppers!");
+        frame.setSize(500,500); 
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); 
+
+        mainPanel = new JPanel(); //creating numeric panel at bottom 
+        mainPanel.setLayout(new GridLayout(5,5)); //5x5 grid layout to create 25 panel grid
+
+    }
+
+    public static void main(final String args[])
+    {
+        new Board(); //creates instance of the board
+
+        for(int i=1; i<26; i++) //use for loop to create 25 instances of water square
+        {
+            Square square1 = new Square(); //creates instance of square 
+            square1.waterSquare(); //makes the square a waterSquare
+        }
+        
+    }
+}
+
+
+SQUARE:
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+public class Square //this class is gonna represent a clickable square on the GUI
+{ 
+    void waterSquare() //method to create waterSquare
+    {
+        Board.mainPanel.add(new JButton(Square.water));
+        Board.frame.setContentPane(Board.mainPanel); //bind panel to the frame
+        Board.frame.setVisible(true);
+    }
+}
