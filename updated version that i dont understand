@@ -1,0 +1,145 @@
+SQUARE
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import java.lang.*;
+
+public class Square //this class is gonna represent a clickable square on the GUI
+{ 
+
+    public int setLocation; //add instance variables so it can hold info about its location on the board
+    public int location;
+    public int inputtedlocation;
+    public int squareLocation;
+
+    public static JButton buttonExample;
+    public static String buttonExample;
+
+    public static ArrayList buttonList;
+
+    public static Square square1 = new Square(); //creates single instance of square 
+
+    public static ImageIcon greenfrog = new ImageIcon("GreenFrog.png");
+    public static ImageIcon greenfrog2 = new ImageIcon("GreenFrog2.png");
+    public static ImageIcon redfrog = new ImageIcon("RedFrog.png");
+    public static ImageIcon redfrog2 = new ImageIcon("RedFrog2.png");
+    public static ImageIcon lilypad = new ImageIcon("LilyPad.png");
+    public static ImageIcon water = new ImageIcon("water.png"); //gets image and sets as icon so we can create buttons later
+
+
+    public void addButton(String buttonType) //create method called addButton which defines which button you want 
+                                            //buttonType is an instance variable so we know which peice is on the square
+    {
+        if (buttonType == ("water"))
+            Board.mainPanel.add(new JButton(Square.water));
+        if (buttonType == ("lilypad"))
+            Board.mainPanel.add(new JButton(Square.lilypad));
+        if (buttonType == ("greenfrog"))
+            Board.mainPanel.add(new JButton(Square.greenfrog));
+        if (buttonType == ("greenfrog2"))
+            Board.mainPanel.add(new JButton(Square.greenfrog2));
+        if (buttonType == ("redfrog"))
+            Board.mainPanel.add(new JButton(Square.redfrog));
+        if (buttonType == ("redfrog2"))
+            Board.mainPanel.add(new JButton(Square.redfrog2));
+
+        Board.frame.setContentPane(Board.mainPanel); //bind panel to the frame
+        Board.frame.setVisible(true);
+    }
+
+    public void changeButton(String buttonType)
+    {
+        if (buttonType == ("lilypad"))
+            buttonExample.setIcon(Square.lilypad);
+        if (buttonType == ("greenfrog"))
+            buttonExample.setIcon(Square.greenfrog);
+        if (buttonType == ("greenfrog2"))
+            buttonExample.setIcon(Square.greenfrog2);
+        if (buttonType == ("redfrog"))
+            buttonExample.setIcon(Square.redfrog);
+        if (buttonType == ("redfrog2"))
+            buttonExample.setIcon(Square.redfrog2);
+    } 
+
+    public void defaultBoard()
+    {
+        ArrayList <Integer> buttonList = new ArrayList<Integer>(); //creating an array of the buttons so we can call them back later
+        for(int i = 1; i < 26; i++) //use for loop to create 25 instances of a button- default bord then adds water
+        {
+            JButton button = new JButton();
+            buttonList.add(i); //adds the button number to the array 
+            square1.addButton("water");
+        }
+        System.out.println("Elements are:"+buttonList);  //JUST A CHECK
+        
+    }
+
+/*    public int setLocation(int x)
+    { 
+        if(x<26 && x>0) //checking bounds
+            x = buttonLocation;
+        return buttonLocation;
+    } */
+
+    public int setLocation(int location) //method called getLocation which returns the location of the button as a number between 1-25
+    {
+        if (location > 26 || location < 0)
+            System.out.print("error"); //this is just checking bounds
+        return location; //ERROR: you're literally putting in a number to get that same number out idg the point of this method 
+    }
+
+    public void updateSquare(int inputtedlocation, String buttonType) //if the getLocation of a square is the same as the inputted location, change THAT square
+    {
+       // if (square1.setLocation(location) == (inputtedlocation)) 
+        boolean buttonPresent = buttonList.contains(inputtedlocation); //checking if the element is in the list
+        if(buttonPresent)
+            System.out.println(inputtedlocation); 
+            changeButton(buttonType);
+        System.out.println(location);
+        System.out.println(inputtedlocation);
+        System.out.println(squareLocation); 
+
+    /*    for(int i=0; i<inputtedlocation; i++)
+        {
+            button.setVisible(false);
+            addButton(buttonType);
+            button.setVisible(true);    
+        } */
+    } 
+}
+
+
+BOARD
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+public class Board //this class is gonna represent the GUI
+{
+    public static JFrame frame; //creates window
+    public static JPanel mainPanel; //creates panel
+    public static JButton waterButton = new JButton(new ImageIcon("Water.png"));
+    public static Square grid = new Square(); //creates single instance of square so we can call upon the class 
+
+    public Board() //this constructor shows a window with 25 instances of Square
+    {
+        frame = new JFrame(); //variables initialised
+        frame.setTitle("Hoppers!");
+        frame.setSize(500,500); 
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //program will cease running when window closed
+
+        mainPanel = new JPanel(); //creates panel and names it mainPanel
+        mainPanel.setLayout(new GridLayout(5,5)); //5x5 grid layout to create 25 panel grid
+
+    }
+
+    public static void main(final String args[])
+    {
+        new Board(); //creates instance of the board
+
+        grid.defaultBoard(); //makes it a default board aka just water
+        //grid.updateSquare(1, "greenfrog"); //updating squares 1 by 1
+        //grid.updateSquare(1, "redfrog");
+    }
+    
+}
