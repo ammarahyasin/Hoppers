@@ -1,0 +1,115 @@
+SQUARE 
+import javax.swing.*;
+import java.awt.*;
+import java.util.*;
+
+public class Square //this class is gonna represent a clickable square on the GUI
+{ 
+
+    public int inputtedlocation = 0, buttonNameInt = 0; //add instance variables so it can hold info about its location on the board
+
+    //public static JButton buttonExample;
+
+    private String buttonName;
+    //private String buttonType;
+
+    private static ArrayList<JButton> buttonList;
+
+    public static Square square1 = new Square(); //creates single instance of square 
+
+    public static ImageIcon greenfrog = new ImageIcon("GreenFrog.png");
+    public static ImageIcon greenfrog2 = new ImageIcon("GreenFrog2.png");
+    public static ImageIcon redfrog = new ImageIcon("RedFrog.png");
+    public static ImageIcon redfrog2 = new ImageIcon("RedFrog2.png");
+    public static ImageIcon lilypad = new ImageIcon("LilyPad.png");
+    public static ImageIcon water = new ImageIcon("water.png"); //gets image and sets as icon so we can add to buttons later
+
+
+    public void defaultBoard()
+    {
+        ArrayList<JButton> buttonList = new ArrayList<JButton>();
+        for(int i = 1; i < 26; i++) //use for loop to create 25 instances of a button
+        {
+            
+            String buttonName = "" + (i); //create a way of identifying each button by giving it a name (add +1 because arrays start from 0)
+                //System.out.println(buttonName); //JUST A CHECK
+            
+            if(buttonName!=null && !buttonName.equals("")) //getting rid of null error while converting from string to integer
+                {
+                    int buttonNameInt = Integer.parseInt(buttonName); //converts buttonName from string into a integer so it can be compared to inputtedLocation
+                    //System.out.println(buttonNameInt); //JUST A CHECK
+                }
+            
+            JButton button = new JButton(buttonName, water); //creates buttons and adds a string to the button with its name, also makes the default icon water 
+            //button.addActionListener(digitListener); //this is from website add it when u need to 
+            buttonList.add(button); //adds each button to the array 
+            Board.mainPanel.add(button); //anchors the buttons to the panel
+
+            Board.frame.setContentPane(Board.mainPanel); //bind panel to the frame
+            Board.frame.setVisible(true); //set it visible 
+        }
+          
+        
+    }
+
+    public void changeIcon(JButton inputtedbutton, String buttonType) //parameters are a button and the icon that it is going to be changed to 
+    {
+        if (buttonType == ("water"))
+            inputtedbutton.setIcon(Square.water);
+        if (buttonType == ("lilypad"))
+            inputtedbutton.setIcon(Square.lilypad);
+        if (buttonType == ("greenfrog"))
+            inputtedbutton.setIcon(Square.greenfrog);
+        if (buttonType == ("greenfrog2"))
+            inputtedbutton.setIcon(Square.greenfrog2);
+        if (buttonType == ("redfrog"))
+            inputtedbutton.setIcon(Square.redfrog);
+        if (buttonType == ("redfrog2"))
+            inputtedbutton.setIcon(Square.redfrog2);
+    }
+
+
+    //private JButton insertName = buttonList.get(inputtedlocation - 1); 
+
+    public void updateSquare(int inputtedlocation, String buttonType) //this changes the squares icon- parameters are WHICH square, and which icon you want to change it to 
+    {
+        if(inputtedlocation == buttonNameInt)
+            changeIcon(buttonList.get(inputtedlocation - 1), buttonType); //subtract 1 from inputted location cuz lists start from 0 
+        else
+        System.out.println("error"); 
+    } 
+}
+
+
+BOARD
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+public class Board //this class is gonna represent the GUI
+{
+    public static JFrame frame; //creates window
+    public static JPanel mainPanel; //creates panel
+    public static JButton waterButton = new JButton(new ImageIcon("Water.png"));
+    public static Square grid = new Square(); //creates single instance of square so we can call upon the class 
+
+    public Board() //this constructor shows a window with 25 instances of Square
+    {
+        frame = new JFrame(); //variables initialised
+        frame.setTitle("Hoppers!");
+        frame.setSize(500,500); 
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //program will cease running when window closed
+
+        mainPanel = new JPanel(); //creates panel and names it mainPanel
+        mainPanel.setLayout(new GridLayout(5,5)); //5x5 grid layout to create 25 panel grid
+
+    }
+
+    public static void main(final String args[])
+    {
+        new Board(); //creates instance of the board
+
+        grid.defaultBoard(); //makes it a default board aka just water
+        grid.updateSquare(1, "greenfrog"); //updating squares 1 by 1
+        //grid.updateSquare(1, "redfrog");
+    }
+    
