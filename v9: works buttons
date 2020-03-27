@@ -1,0 +1,143 @@
+BUTTONS
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Square  //this class is gonna represent a clickable square on the GUI
+{ 
+
+    public int inputtedlocation, buttonNameInt, i; //add instance variables so it can hold info about its location on the board
+
+    ArrayList<JButton> buttonList = new ArrayList<JButton>(); // create array of all the buttons
+    ActionListener squareListener = new MyActionListener();
+    //SquareListener squareListener = new SquareListener();
+
+    public static ImageIcon greenfrog = new ImageIcon("GreenFrog.png");
+    public static ImageIcon greenfrog2 = new ImageIcon("GreenFrog2.png");
+    public static ImageIcon redfrog = new ImageIcon("RedFrog.png");
+    public static ImageIcon redfrog2 = new ImageIcon("RedFrog2.png");
+    public static ImageIcon lilypad = new ImageIcon("LilyPad.png");
+    public static ImageIcon water = new ImageIcon("water.png"); //gets image and sets as icon so we can add to buttons later
+
+
+    public void defaultBoard()  //method to create 25 instances of a button
+    {   
+        for(int i = 1; i < 26; i++) //use for loop to create 25 instances of a button
+        {            
+            String buttonName = "" + (i); //create a way of identifying each button by giving it a name (add +1 because arrays start from 0)
+                //System.out.println(buttonName); //JUST A CHECK
+            
+            if(buttonName!=null && !buttonName.equals("")) //getting rid of null error while converting from string to integer
+                {
+                    int buttonNameInt = Integer.parseInt(buttonName); //converts buttonName from string into a integer so it can be compared to inputtedLocation later on 
+                    //System.out.println(buttonNameInt); //JUST A CHECK
+                }
+            //squareListener listener = new squareListener();
+            //SquareListener squareListener = new SquareListener();
+
+            JButton button = new JButton(buttonName, water); //creates buttons and adds a string to the button with its name, also makes the default icon water 
+            button.addActionListener(squareListener); // adds listener to each button
+            
+            buttonList.add(button); //adds each button to the array buttonList
+            Board.mainPanel.add(button); //anchors the buttons to the panel
+
+            Board.frame.setContentPane(Board.mainPanel); //binds panel to the frame
+            Board.frame.setVisible(true); //set it visible 
+        }
+    }
+
+
+    public void changeIcon(JButton inputtedButton, String buttonType) //parameters are a button and the icon that it is going to be changed to 
+    {
+        if (buttonType == ("water"))
+            inputtedButton.setIcon(Square.water);
+        if (buttonType == ("lilypad"))
+            inputtedButton.setIcon(Square.lilypad);
+        if (buttonType == ("greenfrog"))
+            inputtedButton.setIcon(Square.greenfrog);
+        if (buttonType == ("greenfrog2"))
+            inputtedButton.setIcon(Square.greenfrog2);
+        if (buttonType == ("redfrog"))
+            inputtedButton.setIcon(Square.redfrog);
+        if (buttonType == ("redfrog2"))
+            inputtedButton.setIcon(Square.redfrog2);
+    }
+
+
+    public void newBoard()
+    {
+        changeIcon(buttonList.get(0), "lilypad");
+        changeIcon(buttonList.get(2), "lilypad");
+        changeIcon(buttonList.get(4), "lilypad");
+        changeIcon(buttonList.get(6), "greenfrog");
+        changeIcon(buttonList.get(8), "greenfrog");
+        changeIcon(buttonList.get(10), "lilypad");
+        changeIcon(buttonList.get(12), "greenfrog");
+        changeIcon(buttonList.get(14), "lilypad");
+        changeIcon(buttonList.get(16), "lilypad");
+        changeIcon(buttonList.get(18), "lilypad");
+        changeIcon(buttonList.get(20), "greenfrog");
+        changeIcon(buttonList.get(22), "redfrog");
+        changeIcon(buttonList.get(24), "greenfrog");
+
+    }
+
+    class MyActionListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e) 
+        {
+            // press the button
+            JButton button = (JButton)e.getSource();
+            System.out.println(button.getText()); // get the text content of the button
+            changeIcon(button, "lilypad"); //change the icon of the button to a lilypad
+
+        }
+    }
+
+}
+
+
+BOARD
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+
+public class Board //this class is gonna represent the GUI
+{
+    public static JFrame frame; //creates window
+    public static JPanel mainPanel; //creates panel
+    public static JButton waterButton = new JButton(new ImageIcon("Water.png"));
+    public static Square grid = new Square(); //creates single instance of square so we can call upon the class 
+
+    public Board() //this constructor shows a window with 25 instances of Square
+    {
+        frame = new JFrame(); //variables initialised
+        frame.setTitle("Hoppers!");
+        frame.setSize(500,500); 
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //program will cease running when window closed
+
+        mainPanel = new JPanel(); //creates panel and names it mainPanel
+        mainPanel.setLayout(new GridLayout(5,5)); //5x5 grid layout to create 25 panel grid
+
+    }
+
+    public static void main(final String args[])
+    {
+        new Board(); //creates instance of the board
+
+        grid.defaultBoard(); //makes it a default board aka just water
+
+        grid.newBoard();
+        //grid.updateSquare(6, "redfrog"); //updating squares 1 by 1        
+        //grid.updateSquare(7, "greenfrog");
+        //grid.updateSquare(12, "lilypad");
+
+        
+    }
+    
+}
+
