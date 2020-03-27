@@ -1,0 +1,126 @@
+SQUARE
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Square  //this class is gonna represent a clickable square on the GUI
+{ 
+
+    public int inputtedlocation, buttonNameInt, i; //add instance variables so it can hold info about its location on the board
+
+    ArrayList<JButton> buttonList = new ArrayList<JButton>(); // create array of all the buttons
+    ActionListener squareListener = new MyActionListener();
+    //SquareListener squareListener = new SquareListener();
+
+    String buttonType;
+
+    public static ImageIcon greenfrog = new ImageIcon("GreenFrog.png");
+    public static ImageIcon greenfrog2 = new ImageIcon("GreenFrog2.png");
+    public static ImageIcon redfrog = new ImageIcon("RedFrog.png");
+    public static ImageIcon redfrog2 = new ImageIcon("RedFrog2.png");
+    public static ImageIcon lilypad = new ImageIcon("LilyPad.png");
+    public static ImageIcon water = new ImageIcon("water.png"); //gets image and sets as icon so we can add to buttons later
+
+
+    public void defaultBoard()  //method to create 25 instances of a button
+    {   
+        for(int i = 1; i < 26; i++) //use for loop to create 25 instances of a button
+        {            
+            String buttonName = "" + (i); //create a way of identifying each button by giving it a name (add +1 because arrays start from 0)
+                //System.out.println(buttonName); //JUST A CHECK
+            
+            if(buttonName!=null && !buttonName.equals("")) //getting rid of null error while converting from string to integer
+                {
+                    int buttonNameInt = Integer.parseInt(buttonName); //converts buttonName from string into a integer so it can be compared to inputtedLocation later on 
+                    //System.out.println(buttonNameInt); //JUST A CHECK
+                }
+            //squareListener listener = new squareListener();
+            //SquareListener squareListener = new SquareListener();
+
+            JButton button = new JButton(buttonName, water); //creates buttons and adds a string to the button with its name, also makes the default icon water 
+            button.addActionListener(squareListener); // adds listener to each button
+            
+            buttonList.add(button); //adds each button to the array buttonList
+            Board.mainPanel.add(button); //anchors the buttons to the panel
+
+            Board.frame.setContentPane(Board.mainPanel); //binds panel to the frame
+            Board.frame.setVisible(true); //set it visible 
+        }
+    }
+
+
+    public void changeIcon(JButton inputtedButton, String buttonType) //parameters are a button and the icon that it is going to be changed to 
+    {
+        if (buttonType == ("water"))
+            inputtedButton.setIcon(Square.water);
+            //setIcon(inputtedButton, "water");
+        if (buttonType == ("lilypad"))
+            inputtedButton.setIcon(Square.lilypad);
+            //inputtedButton.setText("lilypad");
+        if (buttonType == ("greenfrog"))
+            inputtedButton.setIcon(Square.greenfrog);
+            //inputtedButton.setText("greenfrog");
+        if (buttonType == ("greenfrog2"))
+            inputtedButton.setIcon(Square.greenfrog2);
+            //inputtedButton.setText("greenfrog2");
+        if (buttonType == ("redfrog"))
+            inputtedButton.setIcon(Square.redfrog);
+            //inputtedButton.setText("redfrog");
+        if (buttonType == ("redfrog2"))
+            inputtedButton.setIcon(Square.redfrog2);
+            //inputtedButton.setText("redfrog2");
+    }
+
+
+    public void newBoard() //creates board by manually placing all the non-water icons onto buttons 
+    {
+        changeIcon(buttonList.get(0), "lilypad");
+        changeIcon(buttonList.get(2), "lilypad");
+        changeIcon(buttonList.get(4), "lilypad");
+        changeIcon(buttonList.get(6), "greenfrog");
+        changeIcon(buttonList.get(8), "greenfrog");
+        changeIcon(buttonList.get(10), "lilypad");
+        changeIcon(buttonList.get(12), "greenfrog");
+        changeIcon(buttonList.get(14), "lilypad");
+        changeIcon(buttonList.get(16), "lilypad");
+        changeIcon(buttonList.get(18), "lilypad");
+        changeIcon(buttonList.get(20), "greenfrog");
+        changeIcon(buttonList.get(22), "redfrog");
+        changeIcon(buttonList.get(24), "greenfrog");
+
+    }
+
+    class MyActionListener implements ActionListener
+    {
+        private Icon newIcon;
+        private int clicked; //counts how many times a button is clicked
+        private ArrayList<Icon> iconList = new ArrayList<Icon>(); //create new array with the icons of all the buttons clicked 
+        
+        public void actionPerformed(ActionEvent e) 
+        {
+            JButton button = (JButton)e.getSource(); //figure out which button was clicked
+            iconList.add(button.getIcon()); //add  the icon to the arrayList
+            clicked++; //increments number of clicks
+
+            System.out.println("location: "+ button.getText()); // CHECK- get the text content of the button (its numerical location)
+            System.out.println("getIcon: "+ button.getIcon());
+            System.out.println("clicked: "+ clicked);
+
+            if ((clicked <= 1) || ((button.getIcon() != Square.lilypad)|| button.getIcon() != Square.lilypad))
+                newIcon = button.getIcon(); //if this is the first button clicked OR not water, leave the icon as it is 
+            else if ((clicked > 1) && ((button.getIcon() == (Square.lilypad) || (button.getIcon() == Square.water)))) //as long as it isnt the first button clicked AND its water or a lilypad
+                 newIcon = (iconList.get(clicked-2)); //new Icon is the icon of the previously clicked button (-1) for previous button and (-1 again) because arrays start from 0 
+                 //change the icon of this button to the previous button's icon
+
+            System.out.println("newIcon: "+ newIcon); 
+            button.setIcon(newIcon); 
+
+            //if (button.getIcon() = redfrog || greenfrog)
+
+        }
+    }
+
+}
