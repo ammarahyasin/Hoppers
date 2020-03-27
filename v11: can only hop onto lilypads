@@ -90,8 +90,15 @@ public class Square  //this class is gonna represent a clickable square on the G
         changeIcon(buttonList.get(20), "greenfrog");
         changeIcon(buttonList.get(22), "redfrog");
         changeIcon(buttonList.get(24), "greenfrog");
-
     }
+
+/*    public void highlightSquare(JButton button) //take advantage of images provided to highlight any peice that is selected
+    {
+        if (button.getIcon() == Square.redfrog)
+            button.setIcon(Square.redfrog2);
+        if (button.getIcon() == Square.greenfrog)
+            button.setIcon(Square.greenfrog2);
+    } */
 
     class MyActionListener implements ActionListener
     {
@@ -104,10 +111,11 @@ public class Square  //this class is gonna represent a clickable square on the G
             JButton button = (JButton)e.getSource(); //figure out which button was clicked
             iconList.add(button.getIcon()); //add  the icon to the arrayList
             clicked++; //increments number of clicks
+            highlightSquare(button);
 
-            System.out.println("location: "+ button.getText()); // CHECK- get the text content of the button (its numerical location)
-            System.out.println("getIcon: "+ button.getIcon());
-            System.out.println("clicked: "+ clicked);
+            //System.out.println("location: "+ button.getText()); // CHECK- get the text content of the button (its numerical location)
+            //System.out.println("getIcon: "+ button.getIcon());
+            //System.out.println("clicked: "+ clicked);
 
             if ((clicked <= 1) || ((button.getIcon() != Square.lilypad)|| button.getIcon() != Square.lilypad))
                 newIcon = button.getIcon(); //if this is the first button clicked OR not water, leave the icon as it is 
@@ -115,7 +123,7 @@ public class Square  //this class is gonna represent a clickable square on the G
                  newIcon = (iconList.get(clicked-2)); //new Icon is the icon of the previously clicked button (-1) for previous button and (-1 again) because arrays start from 0 
                  //change the icon of this button to the previous button's icon
 
-            System.out.println("newIcon: "+ newIcon); 
+            //System.out.println("newIcon: "+ newIcon); 
             button.setIcon(newIcon); 
 
             //if (button.getIcon() = redfrog || greenfrog)
